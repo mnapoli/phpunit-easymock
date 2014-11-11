@@ -2,11 +2,8 @@
 
 Helpers to build PHPUnit mock objects easily.
 
-[![Build Status](https://travis-ci.org/mnapoli/PHP-DI.png?branch=master)](https://travis-ci.org/mnapoli/PHP-DI)
-[![Coverage Status](https://coveralls.io/repos/mnapoli/PHP-DI/badge.png?branch=master)](https://coveralls.io/r/mnapoli/PHP-DI?branch=master)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mnapoli/PHP-DI/badges/quality-score.png)](https://scrutinizer-ci.com/g/mnapoli/PHP-DI/)
-[![Latest Stable Version](https://poser.pugx.org/mnapoli/php-di/v/stable.png)](https://packagist.org/packages/mnapoli/php-di)
-[![Total Downloads](https://poser.pugx.org/mnapoli/php-di/downloads.png)](https://packagist.org/packages/mnapoli/php-di)
+[![Build Status](https://travis-ci.org/mnapoli/phpunit-easymock.png?branch=master)](https://travis-ci.org/mnapoli/phpunit-easymock)
+[![Coverage Status](https://coveralls.io/repos/mnapoli/phpunit-easymock/badge.png?branch=master)](https://coveralls.io/r/mnapoli/phpunit-easymock?branch=master)
 
 ## Why?
 
