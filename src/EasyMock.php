@@ -51,6 +51,8 @@ class EasyMock
 
         if (is_callable($return)) {
             $methodAssertion->willReturnCallback($return);
+        } elseif ($return instanceof \Exception) {
+            $methodAssertion->willThrowException($return);
         } else {
             $methodAssertion->willReturn($return);
         }

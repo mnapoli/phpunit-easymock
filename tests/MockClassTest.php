@@ -4,6 +4,8 @@ namespace EasyMock\Test;
 
 use EasyMock\EasyMock;
 use EasyMock\Test\Fixture\ClassFixture;
+use EasyMock\Test\Fixture\CustomException;
+use EasyMock\Test\Fixture\InterfaceFixture;
 
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
@@ -15,6 +17,7 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
      */
     public function should_mock_objects()
     {
+        /** @var ClassFixture $mock */
         $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture');
 
         $this->assertInstanceOf('PHPUnit_Framework_MockObject_MockObject', $mock);
@@ -26,9 +29,21 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
      */
     public function should_mock_interfaces()
     {
+        /** @var InterfaceFixture $mock */
         $mock = EasyMock::mock('EasyMock\Test\Fixture\InterfaceFixture');
 
         $this->assertInstanceOf('PHPUnit_Framework_MockObject_MockObject', $mock);
+        $this->assertNull($mock->foo());
+    }
+
+    /**
+     * @test
+     */
+    public function not_mocked_methods_should_return_null()
+    {
+        /** @var ClassFixture $mock */
+        $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture');
+
         $this->assertNull($mock->foo());
     }
 
@@ -62,12 +77,15 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \EasyMock\Test\Fixture\CustomException
+     * @expectedExceptionMessage My message
      */
-    public function not_mocked_methods_should_return_null()
+    public function should_mock_existing_method_to_throw_exception()
     {
         /** @var ClassFixture $mock */
-        $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture');
-
-        $this->assertSame(null, $mock->foo());
+        $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture', array(
+            'foo' => new CustomException('My message'),
+        ));
+        $mock->foo();
     }
 }

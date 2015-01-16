@@ -60,6 +60,14 @@ $mock = EasyMock::mock('My\Class', array(
 ));
 ```
 
+You can also have methods throw exceptions by providing an `Exception` instance:
+
+```php
+$mock = EasyMock::mock('My\Class', array(
+    'sayHello' => new \RuntimeException('Whoops'),
+));
+```
+
 ### What if?
 
 If you want to use assertions or other PHPUnit features, just do it:
