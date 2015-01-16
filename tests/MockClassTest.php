@@ -13,11 +13,23 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function should_generate_mock_object()
+    public function should_mock_objects()
     {
         $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture');
 
         $this->assertInstanceOf('PHPUnit_Framework_MockObject_MockObject', $mock);
+        $this->assertNull($mock->foo());
+    }
+
+    /**
+     * @test
+     */
+    public function should_mock_interfaces()
+    {
+        $mock = EasyMock::mock('EasyMock\Test\Fixture\InterfaceFixture');
+
+        $this->assertInstanceOf('PHPUnit_Framework_MockObject_MockObject', $mock);
+        $this->assertNull($mock->foo());
     }
 
     /**
