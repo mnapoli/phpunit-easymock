@@ -35,9 +35,9 @@ Yuck!
 Here is how to write it with EasyMock:
 
 ```php
-$mock = EasyMock::mock('My\Class', array(
+$mock = EasyMock::mock('My\Class', [
     'sayHello' => 'Hello',
-));
+]);
 ```
 
 ### Features
@@ -45,27 +45,37 @@ $mock = EasyMock::mock('My\Class', array(
 You can mock methods so that they return values:
 
 ```php
-$mock = EasyMock::mock('My\Class', array(
+$mock = EasyMock::mock('My\Class', [
     'sayHello' => 'Hello',
-));
+]);
 ```
 
 Or so that they use a callback:
 
 ```php
-$mock = EasyMock::mock('My\Class', array(
+$mock = EasyMock::mock('My\Class', [
     'sayHello' => function ($name) {
         return 'Hello ' . $name;
     },
-));
+]);
 ```
 
 You can also have methods throw exceptions by providing an `Exception` instance:
 
 ```php
-$mock = EasyMock::mock('My\Class', array(
+$mock = EasyMock::mock('My\Class', [
     'sayHello' => new \RuntimeException('Whoops'),
-));
+]);
+```
+
+It is possible to call the `mock()` method again on an existing mock:
+
+```php
+$mock = EasyMock::mock('My\Class');
+
+$mock = EasyMock::mock($mock, [
+    'sayHello' => 'Hello',
+]);
 ```
 
 ### What if?
@@ -73,9 +83,9 @@ $mock = EasyMock::mock('My\Class', array(
 If you want to use assertions or other PHPUnit features, just do it:
 
 ```php
-$mock = EasyMock::mock('My\Class', array(
+$mock = EasyMock::mock('My\Class', [
     'sayHello' => 'hello',
-));
+]);
 
 $mock->expects($this->once())
     ->method('sayGoodbye')

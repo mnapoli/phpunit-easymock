@@ -88,4 +88,18 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
         ));
         $mock->foo();
     }
+
+    /**
+     * @test
+     */
+    public function should_mock_new_methods_on_existing_mock()
+    {
+        /** @var ClassFixture $mock */
+        $mock = EasyMock::mock('EasyMock\Test\Fixture\ClassFixture');
+        $mock = EasyMock::mock($mock, array(
+            'foo' => 'bar',
+        ));
+
+        $this->assertSame('bar', $mock->foo());
+    }
 }
