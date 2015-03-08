@@ -40,6 +40,14 @@ $mock = EasyMock::mock('My\Class', [
 ]);
 ```
 
+What if you want to assert that the method is called once (i.e. `$mock->expect($this->once())`)? Use `spy()` instead:
+
+```php
+$mock = EasyMock::spy('My\Class', [
+    'sayHello' => 'Hello',
+]);
+```
+
 ### Features
 
 You can mock methods so that they return values:

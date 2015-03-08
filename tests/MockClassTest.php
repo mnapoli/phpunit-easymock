@@ -102,4 +102,14 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('bar', $mock->foo());
     }
+
+    /**
+     * @test
+     */
+    public function should_allow_to_spy_method_calls()
+    {
+        $mock = EasyMock::spy('EasyMock\Test\Fixture\ClassFixture', array(
+            'foo' => 'bar',
+        ));
+    }
 }
