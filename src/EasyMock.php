@@ -2,7 +2,6 @@
 
 namespace EasyMock;
 
-use PHPUnit_Framework_MockObject_Generator;
 use PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount as AnyInvokedCount;
 use PHPUnit_Framework_MockObject_Matcher_Invocation as InvocationMatcher;
 use PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce as InvokedAtLeastOnce;
@@ -13,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
-class EasyMock
+trait EasyMock
 {
     /**
      * Mock the given class.
@@ -26,16 +25,16 @@ class EasyMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    public static function mock($classname, array $methods = array())
+    protected function easyMock($classname, array $methods = array())
     {
         if ($classname instanceof MockObject) {
             $mock = $classname;
         } else {
-            $mock = self::createMock($classname);
+            $mock = $this->createMock($classname);
         }
 
         foreach ($methods as $method => $return) {
-            self::mockMethod($mock, $method, new AnyInvokedCount, $return);
+            $this->mockMethod($mock, $method, new AnyInvokedCount, $return);
         }
 
         return $mock;
@@ -47,29 +46,29 @@ class EasyMock
      * This is the same as EasyMock::mock() except this assert that methods are called at
      * least once.
      *
-     * @see mock()
+     * @see easyMock()
      *
      * @param string $classname The class to mock. Can also be an existing mock to mock new methods.
      * @param array  $methods   Array of values to return, indexed by the method name.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    public static function spy($classname, array $methods = array())
+    protected function easySpy($classname, array $methods = array())
     {
         if ($classname instanceof MockObject) {
             $mock = $classname;
         } else {
-            $mock = self::createMock($classname);
+            $mock = $this->createMock($classname);
         }
 
         foreach ($methods as $method => $return) {
-            self::mockMethod($mock, $method, new InvokedAtLeastOnce, $return);
+            $this->mockMethod($mock, $method, new InvokedAtLeastOnce, $return);
         }
 
         return $mock;
     }
 
-    private static function mockMethod(MockObject $mock, $method, InvocationMatcher $invocation, $return)
+    private function mockMethod(MockObject $mock, $method, InvocationMatcher $invocation, $return)
     {
         $methodAssertion = $mock->expects($invocation)
             ->method($method);
@@ -87,11 +86,9 @@ class EasyMock
      * @param string $classname
      * @return MockObject
      */
-    private static function createMock($classname)
+    private function createMock($classname)
     {
-        $mockGenerator = new PHPUnit_Framework_MockObject_Generator();
-
-        return $mockGenerator->getMock(
+        return $this->getMock(
             $classname,
             array(),
             array(),
