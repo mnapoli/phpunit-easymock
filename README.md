@@ -17,6 +17,17 @@ It doesn't reinvent anything and is not intended to cover every use case: only t
 $ composer require --dev mnapoli/phpunit-easymock
 ```
 
+To be able to use EasyMock in your tests **you must include the trait in your class**:
+
+```php
+class MyTest extends \PHPUnit_Framework_TestCase
+{
+    use EasyMock;
+
+    // ...
+}
+```
+
 ## Usage
 
 Here is what a very common PHPUnit mock looks like:
@@ -35,7 +46,7 @@ Yuck!
 Here is how to write it with EasyMock:
 
 ```php
-$mock = EasyMock::mock('My\Class', [
+$mock = $this->easyMock('My\Class', [
     'sayHello' => 'Hello',
 ]);
 ```
@@ -43,7 +54,7 @@ $mock = EasyMock::mock('My\Class', [
 What if you want to assert that the method is called once (i.e. `$mock->expect($this->once())`)? Use `spy()` instead:
 
 ```php
-$mock = EasyMock::spy('My\Class', [
+$mock = $this->easySpy('My\Class', [
     'sayHello' => 'Hello',
 ]);
 ```
@@ -53,7 +64,7 @@ $mock = EasyMock::spy('My\Class', [
 You can mock methods so that they return values:
 
 ```php
-$mock = EasyMock::mock('My\Class', [
+$mock = $this->easyMock('My\Class', [
     'sayHello' => 'Hello',
 ]);
 ```
@@ -61,7 +72,7 @@ $mock = EasyMock::mock('My\Class', [
 Or so that they use a callback:
 
 ```php
-$mock = EasyMock::mock('My\Class', [
+$mock = $this->easyMock('My\Class', [
     'sayHello' => function ($name) {
         return 'Hello ' . $name;
     },
@@ -71,7 +82,7 @@ $mock = EasyMock::mock('My\Class', [
 You can also have methods throw exceptions by providing an `Exception` instance:
 
 ```php
-$mock = EasyMock::mock('My\Class', [
+$mock = $this->easyMock('My\Class', [
     'sayHello' => new \RuntimeException('Whoops'),
 ]);
 ```
@@ -79,9 +90,9 @@ $mock = EasyMock::mock('My\Class', [
 It is possible to call the `mock()` method again on an existing mock:
 
 ```php
-$mock = EasyMock::mock('My\Class');
+$mock = $this->easyMock('My\Class');
 
-$mock = EasyMock::mock($mock, [
+$mock = $this->easyMock($mock, [
     'sayHello' => 'Hello',
 ]);
 ```
@@ -91,7 +102,7 @@ $mock = EasyMock::mock($mock, [
 If you want to use assertions or other PHPUnit features, just do it:
 
 ```php
-$mock = EasyMock::mock('My\Class', [
+$mock = $this->easyMock('My\Class', [
     'sayHello' => 'hello',
 ]);
 
