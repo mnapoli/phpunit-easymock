@@ -10,7 +10,7 @@ use EasyMock\Test\Fixture\InterfaceFixture;
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
-class MockClassTest extends \PHPUnit_Framework_TestCase
+class EasyMockTest extends \PHPUnit_Framework_TestCase
 {
     use EasyMock;
 
