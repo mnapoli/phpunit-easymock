@@ -7,12 +7,19 @@ php:
   - 7.0
   - hhvm
 
+matrix:
+  include:
+    - php: 5.4
+      env: dependencies=lowest
+
 before_script:
-  - composer require satooshi/php-coveralls:dev-master --dev --no-progress
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then composer require satooshi/php-coveralls:dev-master -n ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != '5.6' ]]; then composer install -n ; fi
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
 
 script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != '5.6' ]]; then vendor/bin/phpunit ; fi
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - if [[ "$TRAVIS_PHP_VERSION" == '5.6' ]]; then php vendor/bin/coveralls -v ; fi
