@@ -22,7 +22,7 @@ To be able to use EasyMock in your tests **you must include the trait in your cl
 ```php
 class MyTest extends \PHPUnit_Framework_TestCase
 {
-    use EasyMock;
+    use \EasyMock\EasyMock;
 
     // ...
 }
