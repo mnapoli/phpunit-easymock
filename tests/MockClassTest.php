@@ -114,6 +114,23 @@ class MockClassTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         ));
 
-        $this->assertEquals('bar', $mock->foo());
+        // Test PHPUnit's internals to check that the spy was registered
+        $property = new \ReflectionProperty('PHPUnit_Framework_TestCase', 'mockObjects');
+        $property->setAccessible(true);
+        $mockObjects = $property->getValue($this);
+
+        $this->assertCount(1, $mockObjects);
+        $this->assertSame($mock, $mockObjects[0]);
+
+        // Cannot use @expectedException because PHPUnit has specific behavior for this
+        try {
+            $mock->__phpunit_verify();
+            $this->fail('Exception not thrown');
+        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertContains('Expected invocation at least once but it never occured', $e->getMessage());
+        }
+
+        // Invoke the mock: the test should now pass
+        $mock->foo();
     }
 }
