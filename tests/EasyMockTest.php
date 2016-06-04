@@ -4,6 +4,7 @@ namespace EasyMock\Test;
 
 use EasyMock\EasyMock;
 use EasyMock\Test\Fixture\ClassFixture;
+use EasyMock\Test\Fixture\ClassWithConstructor;
 use EasyMock\Test\Fixture\CustomException;
 use EasyMock\Test\Fixture\InterfaceFixture;
 
@@ -24,6 +25,16 @@ class EasyMockTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('PHPUnit_Framework_MockObject_MockObject', $mock);
         $this->assertNull($mock->foo());
+    }
+
+    /**
+     * @test
+     */
+    public function should_skip_the_constructor()
+    {
+        /** @var ClassWithConstructor $mock */
+        $mock = $this->easyMock('EasyMock\Test\Fixture\ClassWithConstructor');
+        $this->assertFalse($mock->constructorCalled);
     }
 
     /**

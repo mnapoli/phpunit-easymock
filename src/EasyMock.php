@@ -30,7 +30,7 @@ trait EasyMock
         if ($classname instanceof MockObject) {
             $mock = $classname;
         } else {
-            $mock = $this->createMock($classname);
+            $mock = $this->doCreateMock($classname);
         }
 
         foreach ($methods as $method => $return) {
@@ -58,7 +58,7 @@ trait EasyMock
         if ($classname instanceof MockObject) {
             $mock = $classname;
         } else {
-            $mock = $this->createMock($classname);
+            $mock = $this->doCreateMock($classname);
         }
 
         foreach ($methods as $method => $return) {
@@ -86,8 +86,14 @@ trait EasyMock
      * @param string $classname
      * @return MockObject
      */
-    private function createMock($classname)
+    private function doCreateMock($classname)
     {
+        // PHPUnit 5.4 method
+        if (method_exists($this, 'createMock')) {
+            return $this->createMock($classname);
+        }
+
+        // Fallback on the deprecated method
         return $this->getMock(
             $classname,
             array(),
