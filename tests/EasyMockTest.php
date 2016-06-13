@@ -138,7 +138,7 @@ class EasyMockTest extends \PHPUnit_Framework_TestCase
             $mock->__phpunit_verify();
             $this->fail('Exception not thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            $this->assertContains('Expected invocation at least once but it never occured', $e->getMessage());
+            $this->assertContains('Expected invocation at least once but it never occur', $e->getMessage());
         }
 
         // Invoke the mock: the test should now pass
