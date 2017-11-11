@@ -128,7 +128,7 @@ class EasyMockTest extends TestCase
         ));
 
         // Test PHPUnit's internals to check that the spy was registered
-        $property = new \ReflectionProperty(TestCase::class, 'mockObjects');
+        $property = new \ReflectionProperty('PHPUnit\Framework\TestCase', 'mockObjects');
         $property->setAccessible(true);
         $mockObjects = $property->getValue($this);
 
