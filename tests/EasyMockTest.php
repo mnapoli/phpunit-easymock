@@ -7,11 +7,13 @@ use EasyMock\Test\Fixture\ClassFixture;
 use EasyMock\Test\Fixture\ClassWithConstructor;
 use EasyMock\Test\Fixture\CustomException;
 use EasyMock\Test\Fixture\InterfaceFixture;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
-class EasyMockTest extends \PHPUnit_Framework_TestCase
+class EasyMockTest extends TestCase
 {
     use EasyMock;
 
@@ -126,7 +128,7 @@ class EasyMockTest extends \PHPUnit_Framework_TestCase
         ));
 
         // Test PHPUnit's internals to check that the spy was registered
-        $property = new \ReflectionProperty('PHPUnit_Framework_TestCase', 'mockObjects');
+        $property = new \ReflectionProperty('PHPUnit\Framework\TestCase', 'mockObjects');
         $property->setAccessible(true);
         $mockObjects = $property->getValue($this);
 
@@ -137,7 +139,7 @@ class EasyMockTest extends \PHPUnit_Framework_TestCase
         try {
             $mock->__phpunit_verify();
             $this->fail('Exception not thrown');
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (ExpectationFailedException $e) {
             $this->assertContains('Expected invocation at least once but it never occur', $e->getMessage());
         }
 

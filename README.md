@@ -21,7 +21,7 @@ $ composer require --dev mnapoli/phpunit-easymock
 To be able to use EasyMock in your tests **you must include the trait in your class**:
 
 ```php
-class MyTest extends \PHPUnit_Framework_TestCase
+class MyTest extends \PHPUnit\Framework\TestCase
 {
     use \EasyMock\EasyMock;
 
