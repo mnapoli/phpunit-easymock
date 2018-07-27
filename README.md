@@ -34,8 +34,7 @@ class MyTest extends \PHPUnit\Framework\TestCase
 Here is what a very common PHPUnit mock looks like:
 
 ```php
-// All these parameters to avoid calling the constructor
-$mock = $this->getMock('My\Class', array(), array(), '', false);
+$mock = $this->createMock('My\Class');
 
 $mock->expect($this->any())
     ->method('sayHello')
