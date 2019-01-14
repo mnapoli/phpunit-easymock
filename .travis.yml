@@ -29,7 +29,7 @@ before_install:
   - phpenv config-rm xdebug.ini || echo "xdebug not available"
   - composer self-update
 
-install: travis_retry composer install --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest $COMPOSER_FLAGS -vv
+install: travis_retry composer install --optimize-autoloader --prefer-dist --no-progress --no-interaction --no-suggest $COMPOSER_FLAGS -vv
 
 script: vendor/bin/phpunit --colors --columns 117 --no-coverage
 
