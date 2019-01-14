@@ -34,7 +34,7 @@ trait EasyMock
         }
 
         foreach ($methods as $method => $return) {
-            $this->mockMethod($mock, $method, new AnyInvokedCount, $return);
+            $this->mockMethod($mock, $method, new AnyInvokedCount(), $return);
         }
 
         return $mock;

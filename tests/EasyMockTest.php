@@ -35,7 +35,7 @@ class EasyMockTest extends TestCase
     public function should_skip_the_constructor()
     {
         /** @var ClassWithConstructor $mock */
-        $mock = $this->easyMock('EasyMock\Test\Fixture\ClassWithConstructor');
+        $mock = $this->easyMock('\EasyMock\Test\Fixture\ClassWithConstructor');
         $this->assertFalse($mock->constructorCalled);
     }
 
@@ -128,7 +128,7 @@ class EasyMockTest extends TestCase
         ));
 
         // Test PHPUnit's internals to check that the spy was registered
-        $property = new \ReflectionProperty('PHPUnit\Framework\TestCase', 'mockObjects');
+        $property = new \ReflectionProperty('\PHPUnit\Framework\TestCase', 'mockObjects');
         $property->setAccessible(true);
         $mockObjects = $property->getValue($this);
 
