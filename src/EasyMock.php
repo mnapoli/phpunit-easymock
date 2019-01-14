@@ -2,10 +2,10 @@
 
 namespace EasyMock;
 
-use PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount as AnyInvokedCount;
-use PHPUnit_Framework_MockObject_Matcher_Invocation as InvocationMatcher;
-use PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce as InvokedAtLeastOnce;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount;
+use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationMatcher;
+use PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Generates mock objects.
@@ -23,7 +23,7 @@ trait EasyMock
      * @param string $classname The class to mock. Can also be an existing mock to mock new methods.
      * @param array  $methods   Array of values to return, indexed by the method name.
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function easyMock($classname, array $methods = array())
     {
@@ -34,7 +34,7 @@ trait EasyMock
         }
 
         foreach ($methods as $method => $return) {
-            $this->mockMethod($mock, $method, new AnyInvokedCount, $return);
+            $this->mockMethod($mock, $method, new AnyInvokedCount(), $return);
         }
 
         return $mock;
@@ -51,7 +51,7 @@ trait EasyMock
      * @param string $classname The class to mock. Can also be an existing mock to mock new methods.
      * @param array  $methods   Array of values to return, indexed by the method name.
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function easySpy($classname, array $methods = array())
     {
