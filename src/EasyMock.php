@@ -2,10 +2,10 @@
 
 namespace EasyMock;
 
-use PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount;
-use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationMatcher;
-use PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount;
+use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
+use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastOnce;
 
 /**
  * Generates mock objects.
@@ -20,18 +20,14 @@ trait EasyMock
      * Methods not specified in $methods will be mocked to return null (default PHPUnit behavior).
      * The class constructor will *not* be called.
      *
-     * @param string $classname The class to mock. Can also be an existing mock to mock new methods.
-     * @param array  $methods   Array of values to return, indexed by the method name.
+     * @param string|MockObject $classname The class to mock. Can also be an existing mock to mock new methods.
+     * @param array             $methods   Array of values to return, indexed by the method name.
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return MockObject
      */
-    protected function easyMock($classname, array $methods = array())
+    protected function easyMock($classname, array $methods = array()): MockObject
     {
-        if ($classname instanceof MockObject) {
-            $mock = $classname;
-        } else {
-            $mock = $this->doCreateMock($classname);
-        }
+        $mock = $classname instanceof MockObject ? $classname : $this->createMock($classname);
 
         foreach ($methods as $method => $return) {
             $this->mockMethod($mock, $method, new AnyInvokedCount(), $return);
@@ -43,35 +39,31 @@ trait EasyMock
     /**
      * Mock the given class by spying on method calls.
      *
-     * This is the same as EasyMock::mock() except this assert that methods are called at
-     * least once.
+     * This is the same as EasyMock::mock() except this assert that methods are called at least once.
      *
      * @see easyMock()
      *
-     * @param string $classname The class to mock. Can also be an existing mock to mock new methods.
-     * @param array  $methods   Array of values to return, indexed by the method name.
+     * @param string|MockObject $classname The class to mock. Can also be an existing mock to mock new methods.
+     * @param array             $methods   Array of values to return, indexed by the method name.
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return MockObject
      */
-    protected function easySpy($classname, array $methods = array())
+    protected function easySpy($classname, array $methods = array()): MockObject
     {
-        if ($classname instanceof MockObject) {
-            $mock = $classname;
-        } else {
-            $mock = $this->doCreateMock($classname);
-        }
+        $mock = $classname instanceof MockObject ? $classname : $this->createMock($classname);
 
         foreach ($methods as $method => $return) {
-            $this->mockMethod($mock, $method, new InvokedAtLeastOnce, $return);
+            $this->mockMethod($mock, $method, new InvokedAtLeastOnce(), $return);
         }
 
         return $mock;
     }
 
-    private function mockMethod(MockObject $mock, $method, InvocationMatcher $invocation, $return)
+    abstract protected function createMock($originalClassName): MockObject;
+
+    private function mockMethod(MockObject $mock, $method, InvocationOrder $invocation, $return): void
     {
-        $methodAssertion = $mock->expects($invocation)
-            ->method($method);
+        $methodAssertion = $mock->expects($invocation)->method($method);
 
         if (is_callable($return)) {
             $methodAssertion->willReturnCallback($return);
@@ -80,26 +72,5 @@ trait EasyMock
         } else {
             $methodAssertion->willReturn($return);
         }
-    }
-
-    /**
-     * @param string $classname
-     * @return MockObject
-     */
-    private function doCreateMock($classname)
-    {
-        // PHPUnit 5.4 method
-        if (method_exists($this, 'createMock')) {
-            return $this->createMock($classname);
-        }
-
-        // Fallback on the deprecated method
-        return $this->getMock(
-            $classname,
-            array(),
-            array(),
-            '',
-            false
-        );
     }
 }
