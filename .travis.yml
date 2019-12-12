@@ -7,10 +7,9 @@ notifications:
     on_success: never
 
 php:
-  - 7.0
-  - 7.1
   - 7.2
   - 7.3
+  - 7.4
   - nightly
 
 env:
@@ -35,7 +34,6 @@ script: vendor/bin/phpunit --colors --columns 117 --no-coverage
 
 jobs:
   allow_failures:
-    - php: 7.3
     - php: nightly
   include:
     - php: nightly
@@ -43,7 +41,7 @@ jobs:
 
     - stage: test with coverage
       os: linux
-      php: 7.1
+      php: 7.2
       env: COMPOSER_FLAGS=""
       before_install: composer self-update
       script: vendor/bin/phpunit --colors --coverage-text
