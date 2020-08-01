@@ -22,10 +22,8 @@ trait EasyMock
      *
      * @param string|MockObject $classname The class to mock. Can also be an existing mock to mock new methods.
      * @param array             $methods   Array of values to return, indexed by the method name.
-     *
-     * @return MockObject
      */
-    protected function easyMock($classname, array $methods = array()): MockObject
+    protected function easyMock($classname, array $methods = []): MockObject
     {
         $mock = $classname instanceof MockObject ? $classname : $this->createMock($classname);
 
@@ -45,10 +43,8 @@ trait EasyMock
      *
      * @param string|MockObject $classname The class to mock. Can also be an existing mock to mock new methods.
      * @param array             $methods   Array of values to return, indexed by the method name.
-     *
-     * @return MockObject
      */
-    protected function easySpy($classname, array $methods = array()): MockObject
+    protected function easySpy($classname, array $methods = []): MockObject
     {
         $mock = $classname instanceof MockObject ? $classname : $this->createMock($classname);
 
@@ -59,9 +55,7 @@ trait EasyMock
         return $mock;
     }
 
-    abstract protected function createMock($originalClassName): MockObject;
-
-    private function mockMethod(MockObject $mock, $method, InvocationOrder $invocation, $return): void
+    private function mockMethod(MockObject $mock, string $method, InvocationOrder $invocation, $return): void
     {
         $methodAssertion = $mock->expects($invocation)->method($method);
 

@@ -25,7 +25,7 @@ class EasyMockTest extends TestCase
         /** @var ClassFixture $mock */
         $mock = $this->easyMock(ClassFixture::class);
 
-        $this->assertNull($mock->foo());
+        self::assertNull($mock->foo());
     }
 
     /**
@@ -36,7 +36,7 @@ class EasyMockTest extends TestCase
         /** @var ClassWithConstructor $mock */
         $mock = $this->easyMock(ClassWithConstructor::class);
 
-        $this->assertFalse($mock->constructorCalled);
+        self::assertFalse($mock->constructorCalled);
     }
 
     /**
@@ -47,7 +47,7 @@ class EasyMockTest extends TestCase
         /** @var InterfaceFixture $mock */
         $mock = $this->easyMock(InterfaceFixture::class);
 
-        $this->assertNull($mock->foo());
+        self::assertNull($mock->foo());
     }
 
     /**
@@ -58,7 +58,7 @@ class EasyMockTest extends TestCase
         /** @var ClassFixture $mock */
         $mock = $this->easyMock(ClassFixture::class);
 
-        $this->assertNull($mock->foo());
+        self::assertNull($mock->foo());
     }
 
     /**
@@ -71,7 +71,7 @@ class EasyMockTest extends TestCase
             'foo' => 'bar',
         ));
 
-        $this->assertSame('bar', $mock->foo());
+        self::assertSame('bar', $mock->foo());
     }
 
     /**
@@ -86,7 +86,7 @@ class EasyMockTest extends TestCase
             },
         ));
 
-        $this->assertSame('bar', $mock->foo());
+        self::assertSame('bar', $mock->foo());
     }
 
     /**
@@ -116,7 +116,7 @@ class EasyMockTest extends TestCase
             'foo' => 'bar',
         ));
 
-        $this->assertSame('bar', $mock->foo());
+        self::assertSame('bar', $mock->foo());
     }
 
     /**
@@ -134,8 +134,8 @@ class EasyMockTest extends TestCase
         $property->setAccessible(true);
         $mockObjects = $property->getValue($this);
 
-        $this->assertCount(1, $mockObjects);
-        $this->assertSame($mock, $mockObjects[0]);
+        self::assertCount(1, $mockObjects);
+        self::assertSame($mock, $mockObjects[0]);
 
         // Cannot use @expectedException because PHPUnit has specific behavior for this
         try {
