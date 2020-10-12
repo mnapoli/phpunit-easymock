@@ -2,8 +2,6 @@
 
 Helpers to build PHPUnit mock objects easily.
 
-[![Build Status](https://travis-ci.org/mnapoli/phpunit-easymock.png?branch=master)](https://travis-ci.org/mnapoli/phpunit-easymock)
-[![Coverage Status](https://coveralls.io/repos/mnapoli/phpunit-easymock/badge.png?branch=master)](https://coveralls.io/r/mnapoli/phpunit-easymock?branch=master)
 [![Total Downloads](https://poser.pugx.org/mnapoli/phpunit-easymock/downloads)](https://packagist.org/packages/mnapoli/phpunit-easymock)
 
 ## Why?
