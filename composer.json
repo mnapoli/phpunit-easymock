@@ -17,6 +17,6 @@
     },
     "require": {
         "php": ">=7.3",
-        "phpunit/phpunit": "^8.5|^9.0"
+        "phpunit/phpunit": "^8.5|^9.0|^10.0|^11.0"
     }
 }
